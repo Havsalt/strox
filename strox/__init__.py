@@ -18,7 +18,7 @@ __all__ = [
     "get_similarity_score",
     "get_closest_match",
     "get_close_matches",
-    "Budget"
+    "Budget",
 ]
 
 import difflib as _difflib
@@ -36,12 +36,12 @@ class Budget(_NamedTuple):
     end_bonus: float = 0.0
 
 
-def get_similarity_score( # NOTE: higher score is more similar
+def get_similarity_score(  # NOTE: higher score is more similar
     string1: str,
     string2: str,
     /,
     *,
-    budget: Budget | None = None
+    budget: Budget | None = None,
 ) -> float:
     if budget is None:
         budget = Budget()
@@ -76,12 +76,14 @@ def get_closest_match(
     options: _Iterable[str],
     /,
     *,
-    budget: Budget | None = None
+    budget: Budget | None = None,
 ) -> str:
     if budget is None:
         budget = Budget()
     if not options:
-        raise ValueError(f"parameter 'options' has to be a populated sequence, got '{options}'")
+        raise ValueError(
+            f"parameter 'options' has to be a populated sequence, got '{options}'"
+        )
     compare = _partial(get_similarity_score, string, budget=budget)
     best_match = max(options, key=compare)
     return best_match
@@ -98,7 +100,9 @@ def get_close_matches(
     if budget is None:
         budget = Budget()
     if not options:
-        raise ValueError(f"parameter 'options' has to be a populated sequence, got '{options}'")
+        raise ValueError(
+            f"parameter 'options' has to be a populated sequence, got '{options}'"
+        )
     compare = _partial(get_similarity_score, string, budget=budget)
     matches = sorted(options, key=compare, reverse=True)
     if max_results is None:
