@@ -13,7 +13,7 @@ Includes:
 
 from __future__ import annotations as _annotations
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = [
     "get_similarity_score",
     "get_closest_match",
@@ -36,7 +36,7 @@ class Budget(_NamedTuple):
     end_bonus: float = 0.0
 
 
-def get_similarity_score(  # NOTE: higher score is more similar
+def get_similarity_score(  # NOTE: Higher score is more similar
     string1: str,
     string2: str,
     /,
@@ -82,7 +82,7 @@ def get_closest_match(
         budget = Budget()
     if not options:
         raise ValueError(
-            f"parameter 'options' has to be a populated sequence, got '{options}'"
+            f"Expected parameter 'options' to be a populated sequence, got: {options}"
         )
     compare = _partial(get_similarity_score, string, budget=budget)
     best_match = max(options, key=compare)
@@ -101,10 +101,59 @@ def get_close_matches(
         budget = Budget()
     if not options:
         raise ValueError(
-            f"parameter 'options' has to be a populated sequence, got '{options}'"
+            f"Expected parameter 'options' has to be a populated sequence, got: {options}"
         )
     compare = _partial(get_similarity_score, string, budget=budget)
     matches = sorted(options, key=compare, reverse=True)
     if max_results is None:
         return matches
     return matches[:max_results]
+
+
+def main() -> int:
+    import argparse
+    import sys
+
+    class ParserArguments(argparse.Namespace):
+        query: str
+        options: list[str]
+
+    parser = argparse.ArgumentParser(
+        prog="strox",
+        description="Command line interface for the `strox` package",
+        add_help=False,
+    )
+    parser.add_argument(
+        "-h",
+        "--help",
+        action="help",
+        help="Show this help message and exit",
+        default=argparse.SUPPRESS,
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"%(prog)s: v{__version__}",
+        help="Show `%(prog)s` version number and exit",
+    )
+    parser.add_argument(
+        "query",
+        help="Query to match against",
+    )
+    parser.add_argument(
+        "options",
+        nargs="+",
+        help="Options to select from",
+    )
+
+    args = ParserArguments()
+    parser.parse_args(namespace=args)
+
+    result = get_closest_match(
+        args.query,
+        args.options,
+    )
+    sys.stdout.write(result)
+
+    return 0
