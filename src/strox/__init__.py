@@ -2,7 +2,7 @@
 Strox
 =====
 
-Find strings that matches approximately the given pattern
+Find strings that matches approximately the given query.
 
 Includes:
 - `get_similarity_score`
