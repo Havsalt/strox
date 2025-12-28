@@ -17,3 +17,8 @@ license-files = ["LICENSE"]
 
 [project.scripts]
 strox = "strox._cli:main"
+
+[dependency-groups]
+dev = [
+    "ruff~=0.14.0",
+]
