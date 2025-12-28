@@ -1,6 +1,6 @@
 """
 Strox
------
+=====
 
 Find strings that matches approximately the given pattern
 
