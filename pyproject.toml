@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "strox"
-version = "0.1.3"
+version = "0.1.4"
 description = "Find strings that matches approximately the given query"
 authors = [
     { name = "Havsalt", email = "77575424+Havsalt@users.noreply.github.com" }
