@@ -13,7 +13,6 @@ Includes:
 
 from __future__ import annotations as _annotations
 
-__version__ = "0.1.1"
 __all__ = [
     "get_similarity_score",
     "get_closest_match",
@@ -24,6 +23,7 @@ __all__ = [
 import difflib as _difflib
 from functools import partial as _partial
 from collections.abc import Iterable as _Iterable
+from importlib.metadata import version
 from typing import NamedTuple as _NamedTuple
 
 
@@ -134,7 +134,7 @@ def main() -> int:
         "-v",
         "--version",
         action="version",
-        version=f"%(prog)s: v{__version__}",
+        version=f"%(prog)s: v{version('strox')}",
         help="Show `%(prog)s` version number and exit",
     )
     parser.add_argument(
