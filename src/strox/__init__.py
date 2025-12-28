@@ -23,7 +23,7 @@ __all__ = [
 import difflib as _difflib
 from functools import partial as _partial
 from collections.abc import Iterable as _Iterable
-from importlib.metadata import version
+from importlib.metadata import version as _version
 from typing import NamedTuple as _NamedTuple
 
 
@@ -192,7 +192,7 @@ def main() -> int:
         "-v",
         "--version",
         action="version",
-        version=f"%(prog)s: v{version('strox')}",
+        version=f"%(prog)s: v{_version('strox')}",
         help="Show `%(prog)s` version number and exit",
     )
     parser.add_argument(
